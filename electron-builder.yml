@@ -1,0 +1,70 @@
+appId: com.kairos.education
+productName: Kairos
+copyright: Copyright © 2025 Kairos Education
+
+directories:
+  buildResources: resources
+  output: dist
+
+files:
+  - out/**/*
+  - assets/**/*
+  - "!**/*.map"
+  - "!**/node_modules/**"
+
+extraResources:
+  - from: binaries/${os}-${arch}
+    to: binaries
+    filter:
+      - "**/*"
+  - from: assets/curriculum
+    to: curriculum
+  - from: assets/necta
+    to: necta
+  - from: assets/i18n
+    to: i18n
+
+asarUnpack:
+  - "**/node_modules/better-sqlite3/**"
+  - "**/node_modules/tesseract.js/**"
+  - "**/node_modules/tesseract.js-core/**"
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  icon: resources/icon.ico
+  publisherName: Kairos Education
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  installerIcon: resources/installer.ico
+  uninstallerIcon: resources/installer.ico
+  installerHeaderIcon: resources/icon.ico
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Kairos
+
+linux:
+  target:
+    - target: AppImage
+      arch: [x64]
+    - target: deb
+      arch: [x64]
+  icon: resources/icon.png
+  category: Education
+  description: AI Teacher Copilot for Tanzanian Secondary Schools
+
+mac:
+  target:
+    - target: dmg
+      arch: [x64, arm64]
+  icon: resources/icon.icns
+  category: public.app-category.education
+  darkModeSupport: true
+
+publish:
+  provider: github
+  owner: kairos-education
+  repo: kairos

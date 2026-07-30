@@ -1,0 +1,104 @@
+{
+  "version": "2025",
+  "source": "NECTA Marking Conventions — Tanzania",
+  "gradingScale": {
+    "A": { "min": 80, "max": 100, "description": "Distinction", "points": 1 },
+    "B": { "min": 60, "max": 79,  "description": "Credit",      "points": 2 },
+    "C": { "min": 45, "max": 59,  "description": "Pass",        "points": 3 },
+    "D": { "min": 30, "max": 44,  "description": "Weak Pass",   "points": 4 },
+    "F": { "min": 0,  "max": 29,  "description": "Fail",        "points": 5 }
+  },
+  "divisionCriteria": {
+    "Division I":   { "maxPoints": 7,  "minSubjects": 7 },
+    "Division II":  { "maxPoints": 14, "minSubjects": 7 },
+    "Division III": { "maxPoints": 21, "minSubjects": 7 },
+    "Division IV":  { "maxPoints": 25, "minSubjects": 7 },
+    "Division 0":   { "description": "Fail — did not meet minimum requirements" }
+  },
+  "examStructure": {
+    "CSEE": {
+      "fullName": "Certificate of Secondary Education Examination",
+      "form": "Form 4",
+      "paperTypes": {
+        "SectionA": {
+          "name": "Section A",
+          "questionType": "Multiple Choice",
+          "questions": 30,
+          "marksEach": 1,
+          "totalMarks": 30,
+          "instructions": "Choose the correct answer from A, B, C or D"
+        },
+        "SectionB": {
+          "name": "Section B",
+          "questionType": "Short Answer",
+          "questions": 7,
+          "marksEach": "Variable (2-5 marks)",
+          "totalMarks": 35,
+          "instructions": "Answer all questions"
+        },
+        "SectionC": {
+          "name": "Section C",
+          "questionType": "Structured Essay",
+          "questions": "Choose 2 from 3",
+          "marksEach": 20,
+          "totalMarks": 40,
+          "instructions": "Answer two questions from this section"
+        }
+      },
+      "totalMarks": 100,
+      "duration": "3 hours"
+    }
+  },
+  "markingPrinciples": [
+    "Award marks for any correct and valid response even if not in the marking scheme",
+    "Do not penalise candidates for spelling or grammar errors unless the question specifically tests language",
+    "For calculation questions, award marks for correct method even if the arithmetic answer is wrong (ECF - Error Carried Forward)",
+    "For diagram questions, award marks for correctly labelled parts",
+    "Reject vague or ambiguous answers that do not demonstrate understanding",
+    "For Kiswahili questions, accept correct Swahili terminology equivalents"
+  ],
+  "commonSubjectWeights": {
+    "Biology": {
+      "Form4NECTA": {
+        "highWeight": ["Nutrition", "Reproduction", "Genetics", "Transport", "Ecology"],
+        "mediumWeight": ["Classification", "Respiration", "Excretion"],
+        "lowWeight": ["Introduction", "History of Biology"]
+      }
+    },
+    "Chemistry": {
+      "Form4NECTA": {
+        "highWeight": ["Organic Chemistry", "Acids Bases Salts", "Electrochemistry", "Chemical Bonding"],
+        "mediumWeight": ["Periodic Table", "Chemical Equations", "Moles"],
+        "lowWeight": ["Introduction", "Laboratory Equipment"]
+      }
+    },
+    "Physics": {
+      "Form4NECTA": {
+        "highWeight": ["Electricity", "Forces and Motion", "Waves and Optics", "Thermal Physics"],
+        "mediumWeight": ["Magnetism", "Atomic Physics", "Measurement"],
+        "lowWeight": ["Introduction", "History"]
+      }
+    },
+    "Mathematics": {
+      "Form4NECTA": {
+        "highWeight": ["Algebra", "Geometry", "Statistics", "Trigonometry", "Calculus (Form 5/6)"],
+        "mediumWeight": ["Numbers", "Functions", "Vectors"],
+        "lowWeight": ["Sets", "Basic Number Operations"]
+      }
+    }
+  },
+  "paperCodes": {
+    "Biology":          { "paper1": "BIOL/1", "paper2": "BIOL/2" },
+    "Chemistry":        { "paper1": "CHEM/1", "paper2": "CHEM/2" },
+    "Physics":          { "paper1": "PHYS/1", "paper2": "PHYS/2" },
+    "Mathematics":      { "paper1": "MATH/1", "paper2": "MATH/2" },
+    "English":          { "paper1": "ENGL/1", "paper2": "ENGL/2" },
+    "Kiswahili":        { "paper1": "KISW/1", "paper2": "KISW/2" },
+    "Geography":        { "paper1": "GEOG/1", "paper2": "GEOG/2" },
+    "History":          { "paper1": "HIST/1", "paper2": "HIST/2" },
+    "Civics":           { "paper1": "CIVIC/1" },
+    "Commerce":         { "paper1": "COMM/1", "paper2": "COMM/2" },
+    "Bookkeeping":      { "paper1": "BOOK/1" },
+    "Agriculture":      { "paper1": "AGRI/1", "paper2": "AGRI/2" }
+  }
+}

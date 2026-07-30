@@ -1,0 +1,404 @@
+/* src/renderer/src/styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ══════════════════════════════════════════════════════════════════
+   DESIGN SYSTEM — flat page background + floating cards
+   All colors are CSS custom properties. Components must never hard-code
+   colors; everything references these variables so theme switching is
+   instant and consistent. Light is the default; [data-theme="dark"]
+   overrides below.
+   ══════════════════════════════════════════════════════════════════ */
+@layer base {
+  :root {
+    /* ── Design-system surfaces & text (spec) ── */
+    --bg-page: #f7f7f8;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f0f0f2;
+    --border-color: rgba(0, 0, 0, 0.08);
+    --border-strong: rgba(0, 0, 0, 0.14);
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-card-lg: 0 4px 16px rgba(0, 0, 0, 0.10);
+    --text-primary: #1a1a1e;
+    --text-secondary: #6b6b70;
+    --text-tertiary: #9b9ba0;
+
+    /* Inset surfaces (subtle panels inside cards, e.g. chat bubbles) */
+    --surface-inset: #f1f5f9;
+    --surface-inset-2: #e2e8f0;
+
+    /* Soft status tints (backgrounds for badges / banners) */
+    --tint-primary: #eaf2f8;
+    --tint-success: #e7f6ee;
+    --tint-warning: #fdf3d9;
+    --tint-danger: #fdECEA;
+    --tint-info: #eaf2f8;
+
+    /* Consistent spacing scale */
+    --space-1: 8px;
+    --space-2: 12px;
+    --space-3: 16px;
+    --space-4: 24px;
+
+    /* ── Legacy token bridge (kept so existing components keep working) ── */
+    --color-primary: #1B4F72;
+    --color-primary-hover: #153D58;
+    --color-primary-light: #D6E4F0;
+    --color-primary-dark: #0F2B3E;
+    --color-accent: #F39C12;
+    --color-accent-hover: #C07D0E;
+    --color-background: var(--bg-page);
+    --color-surface: var(--bg-card);
+    --color-surface-hover: var(--bg-card-hover);
+    --color-text-primary: var(--text-primary);
+    --color-text-secondary: var(--text-secondary);
+    --color-text-tertiary: var(--text-tertiary);
+    --color-border: var(--border-color);
+    --color-border-light: var(--border-color);
+    --color-success: #27AE60;
+    --color-warning: #F39C12;
+    --color-error: #E74C3C;
+    --color-info: #3478B4;
+    --color-success-bg: var(--tint-success);
+    --color-warning-bg: var(--tint-warning);
+    --color-error-bg: var(--tint-danger);
+    --color-info-bg: var(--tint-info);
+
+    --primary: var(--color-primary);
+    --accent: var(--color-accent);
+    --success: var(--color-success);
+    --danger: var(--color-error);
+    --bg: var(--bg-page);
+  }
+
+  /* ── DARK THEME ── */
+  [data-theme='dark'] {
+    --bg-page: #131316;
+    --bg-card: #1e1e22;
+    --bg-card-hover: #2a2a2f;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.16);
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-card-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --text-primary: #f0f0f2;
+    --text-secondary: #9b9ba0;
+    --text-tertiary: #6b6b70;
+
+    --surface-inset: #26262b;
+    --surface-inset-2: #34343a;
+
+    --tint-primary: rgba(52, 120, 180, 0.18);
+    --tint-success: rgba(39, 174, 96, 0.18);
+    --tint-warning: rgba(243, 156, 18, 0.18);
+    --tint-danger: rgba(231, 76, 60, 0.18);
+    --tint-info: rgba(52, 120, 180, 0.18);
+
+    /* Brand tints must read on dark surfaces */
+    --color-primary: #5D93C3;
+    --color-primary-hover: #85AED2;
+    --color-primary-light: rgba(93, 147, 195, 0.18);
+    --color-success: #34d399;
+    --color-warning: #fbbf24;
+    --color-error: #f87171;
+
+    /* Accent text colors — lightened so they read on dark tints */
+    --accent-green: #4ade80;
+    --accent-amber: #fbbf24;
+    --accent-blue: #60a5fa;
+    --accent-orange: #fb923c;
+    --accent-purple: #c084fc;
+    --accent-red: #f87171;
+
+    /* Accent tint backgrounds (subtle, on dark) */
+    --tint-green: rgba(74, 222, 128, 0.14);
+    --tint-amber: rgba(251, 191, 36, 0.14);
+    --tint-blue: rgba(96, 165, 250, 0.14);
+    --tint-orange: rgba(251, 146, 60, 0.14);
+    --tint-purple: rgba(192, 132, 252, 0.14);
+    --tint-red: rgba(248, 113, 113, 0.14);
+  }
+
+  /* ── HIGH CONTRAST ── */
+  [data-theme='high-contrast'] {
+    --bg-page: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f0f0f0;
+    --border-color: #000000;
+    --border-strong: #000000;
+    --shadow-card: 0 0 0 1px #000000;
+    --shadow-card-lg: 0 0 0 2px #000000;
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --text-tertiary: #555555;
+    --surface-inset: #f0f0f0;
+    --surface-inset-2: #e0e0e0;
+  }
+
+  * {
+    border-color: var(--border-color);
+  }
+
+  html,
+  body {
+    background-color: var(--bg-page);
+  }
+
+  body {
+    @apply font-sans antialiased;
+    color: var(--text-primary);
+    font-size: 14px;
+    user-select: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  /* Allow text selection in content areas */
+  p, span, h1, h2, h3, h4, input, textarea, [contenteditable] {
+    user-select: text;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-tertiary);
+  }
+
+  .no-drag { -webkit-app-region: no-drag; }
+  .drag { -webkit-app-region: drag; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   COMPONENT LAYER — variable-driven so both themes stay consistent
+   ══════════════════════════════════════════════════════════════════ */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium
+           transition-all duration-150 focus-visible:outline-none focus-visible:ring-2
+           focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary text-white hover:bg-primary-700 active:bg-primary-800;
+  }
+
+  .btn-secondary {
+    @apply btn;
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+  .btn-secondary:hover { background-color: var(--bg-card-hover); }
+
+  .btn-accent {
+    @apply btn bg-accent text-white hover:bg-accent-700 active:bg-accent-800;
+  }
+
+  .btn-ghost {
+    @apply btn;
+    color: var(--text-secondary);
+  }
+  .btn-ghost:hover {
+    background-color: var(--bg-card-hover);
+    color: var(--text-primary);
+  }
+
+  .btn-danger {
+    @apply btn bg-danger text-white hover:bg-red-600;
+  }
+
+  .btn-sm { @apply px-3 py-1.5 text-xs; }
+  .btn-lg { @apply px-6 py-3 text-base; }
+
+  /* Floating card — the core surface primitive */
+  .card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Elevated / primary card — hierarchy through elevation, not color */
+  .card-elevated {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: var(--shadow-card-lg);
+  }
+
+  .input {
+    @apply w-full rounded-lg px-3 py-2 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/40;
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+  .input::placeholder { color: var(--text-tertiary); }
+  .input:focus { border-color: var(--color-primary); }
+
+  .label {
+    @apply block text-sm font-medium mb-1;
+    color: var(--text-primary);
+  }
+
+  .select { @apply input cursor-pointer; }
+
+  .section-title {
+    @apply font-heading text-xl font-semibold mb-1;
+    color: var(--color-primary);
+  }
+  .section-sub {
+    @apply text-sm;
+    color: var(--text-secondary);
+  }
+
+  .cursor-blink { @apply animate-blink; }
+
+  .grade-badge {
+    @apply inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold text-white;
+  }
+  .grade-A { @apply bg-success; }
+  .grade-B { @apply bg-green-500; }
+  .grade-C { @apply bg-accent; }
+  .grade-D { @apply bg-orange-500; }
+  .grade-F { @apply bg-danger; }
+
+  /* Sidebar nav item */
+  .nav-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer;
+    color: var(--text-secondary);
+  }
+  .nav-item:hover {
+    background-color: var(--bg-card-hover);
+    color: var(--color-primary);
+  }
+  .nav-item.active {
+    background-color: var(--tint-primary);
+    color: var(--color-primary);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   DARK-THEME UTILITY BRIDGE
+   The app uses Tailwind's hard-coded slate/white utilities in many
+   components. Rather than rewrite every file, these scoped overrides
+   remap the common utilities to theme variables so dark mode is correct
+   app-wide. Higher specificity than the base utility means no !important.
+   ══════════════════════════════════════════════════════════════════ */
+[data-theme='dark'] .bg-white,
+[data-theme='high-contrast'] .bg-white { background-color: var(--bg-card); }
+
+[data-theme='dark'] .bg-slate-50,
+[data-theme='dark'] .bg-slate-100 { background-color: var(--surface-inset); }
+[data-theme='dark'] .bg-slate-200 { background-color: var(--surface-inset-2); }
+[data-theme='dark'] .hover\:bg-slate-50:hover,
+[data-theme='dark'] .hover\:bg-slate-100:hover { background-color: var(--surface-inset); }
+[data-theme='dark'] .hover\:bg-slate-200:hover { background-color: var(--surface-inset-2); }
+
+[data-theme='dark'] .text-slate-900,
+[data-theme='dark'] .text-slate-800 { color: var(--text-primary); }
+[data-theme='dark'] .text-slate-700,
+[data-theme='dark'] .text-slate-600 { color: var(--text-secondary); }
+[data-theme='dark'] .text-slate-500,
+[data-theme='dark'] .text-slate-400,
+[data-theme='dark'] .text-slate-300 { color: var(--text-tertiary); }
+[data-theme='dark'] .hover\:text-slate-700:hover { color: var(--text-primary); }
+
+[data-theme='dark'] .border-slate-100,
+[data-theme='dark'] .border-slate-200,
+[data-theme='dark'] .border-slate-300 { border-color: var(--border-color); }
+
+[data-theme='dark'] .divide-slate-50 > * + *,
+[data-theme='dark'] .divide-slate-100 > * + *,
+[data-theme='dark'] .divide-slate-200 > * + * { border-color: var(--border-color); }
+
+[data-theme='dark'] .bg-slate-300 { background-color: var(--surface-inset-2); }
+
+/* Semi-transparent white overlays (icon chips inside colored cards) */
+[data-theme='dark'] .bg-white\/80,
+[data-theme='dark'] .bg-white\/90 { background-color: var(--surface-inset-2); }
+
+/* ── Accent tint backgrounds → subtle dark tints ── */
+[data-theme='dark'] .bg-primary-50,
+[data-theme='dark'] .bg-primary-100 { background-color: var(--tint-primary); }
+[data-theme='dark'] .bg-green-50,
+[data-theme='dark'] .bg-green-100,
+[data-theme='dark'] .bg-green-50\/30 { background-color: var(--tint-green); }
+[data-theme='dark'] .bg-amber-50,
+[data-theme='dark'] .bg-amber-100 { background-color: var(--tint-amber); }
+[data-theme='dark'] .bg-blue-50,
+[data-theme='dark'] .bg-blue-100,
+[data-theme='dark'] .bg-blue-50\/30 { background-color: var(--tint-blue); }
+[data-theme='dark'] .bg-orange-50,
+[data-theme='dark'] .bg-orange-100,
+[data-theme='dark'] .bg-orange-50\/30 { background-color: var(--tint-orange); }
+[data-theme='dark'] .bg-purple-50,
+[data-theme='dark'] .bg-purple-100 { background-color: var(--tint-purple); }
+[data-theme='dark'] .bg-red-50,
+[data-theme='dark'] .bg-red-100 { background-color: var(--tint-red); }
+[data-theme='dark'] .bg-amber-400 { background-color: var(--accent-amber); }
+
+/* ── Accent text → lightened for contrast on dark tints ── */
+[data-theme='dark'] .text-green-500,
+[data-theme='dark'] .text-green-600,
+[data-theme='dark'] .text-green-700,
+[data-theme='dark'] .text-green-800 { color: var(--accent-green); }
+[data-theme='dark'] .text-amber-500,
+[data-theme='dark'] .text-amber-600,
+[data-theme='dark'] .text-amber-700,
+[data-theme='dark'] .text-amber-800 { color: var(--accent-amber); }
+[data-theme='dark'] .text-blue-600,
+[data-theme='dark'] .text-blue-700,
+[data-theme='dark'] .text-blue-800 { color: var(--accent-blue); }
+[data-theme='dark'] .text-orange-500,
+[data-theme='dark'] .text-orange-600,
+[data-theme='dark'] .text-orange-700 { color: var(--accent-orange); }
+[data-theme='dark'] .text-purple-400,
+[data-theme='dark'] .text-purple-600 { color: var(--accent-purple); }
+[data-theme='dark'] .text-red-500,
+[data-theme='dark'] .text-red-600,
+[data-theme='dark'] .text-red-700 { color: var(--accent-red); }
+[data-theme='dark'] .text-amber-300,
+[data-theme='dark'] .text-primary-300 { color: var(--text-tertiary); }
+
+/* ── Accent borders → neutral theme border ── */
+[data-theme='dark'] .border-primary-100,
+[data-theme='dark'] .border-green-100,
+[data-theme='dark'] .border-green-200,
+[data-theme='dark'] .border-amber-100,
+[data-theme='dark'] .border-amber-200,
+[data-theme='dark'] .border-blue-100,
+[data-theme='dark'] .border-blue-200,
+[data-theme='dark'] .border-orange-100,
+[data-theme='dark'] .border-red-100,
+[data-theme='dark'] .border-red-200 { border-color: var(--border-color); }
+
+/* Tiptap editor styles */
+.ProseMirror {
+  @apply outline-none min-h-[200px] text-sm leading-relaxed;
+  color: var(--text-primary);
+}
+.ProseMirror p { @apply mb-2; }
+.ProseMirror h1 { @apply text-xl font-semibold mb-3 font-heading; color: var(--color-primary); }
+.ProseMirror h2 { @apply text-lg font-semibold mb-2; color: var(--text-primary); }
+.ProseMirror h3 { @apply text-base font-semibold mb-2; }
+.ProseMirror ul { @apply list-disc ml-5 mb-2; }
+.ProseMirror ol { @apply list-decimal ml-5 mb-2; }
+.ProseMirror li { @apply mb-1; }
+.ProseMirror strong { @apply font-semibold; }
+.ProseMirror em { @apply italic; }
+
+/* Animation for streaming text */
+@keyframes fadeToken {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.stream-token { animation: fadeToken 0.05s ease-in; }

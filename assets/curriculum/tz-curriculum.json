@@ -1,0 +1,200 @@
+[
+  {
+    "id": "bio-f1-01",
+    "subject": "Biology",
+    "classLevel": "Form 1",
+    "chapter": 1,
+    "topic": "Introduction to Biology",
+    "subtopics": ["Definition and scope", "Branches of biology", "Importance of biology", "Scientific method"],
+    "nectaWeight": 0.4,
+    "keywords": ["biology", "science", "organisms", "hypothesis"],
+    "textbookRef": "TIE Biology Form 1, Chapter 1, pp. 1-15"
+  },
+  {
+    "id": "bio-f1-02",
+    "subject": "Biology",
+    "classLevel": "Form 1",
+    "chapter": 2,
+    "topic": "Cell Biology",
+    "subtopics": ["Cell as basic unit of life", "Plant vs animal cells", "Cell organelles", "Cell membrane", "Nucleus and chromosomes"],
+    "nectaWeight": 0.8,
+    "keywords": ["cell", "nucleus", "cytoplasm", "mitochondria", "chloroplast", "vacuole"],
+    "textbookRef": "TIE Biology Form 1, Chapter 2, pp. 16-40"
+  },
+  {
+    "id": "bio-f2-01",
+    "subject": "Biology",
+    "classLevel": "Form 2",
+    "chapter": 1,
+    "topic": "Nutrition",
+    "subtopics": ["Autotrophic nutrition", "Heterotrophic nutrition", "Photosynthesis", "Digestion in humans"],
+    "nectaWeight": 0.9,
+    "keywords": ["photosynthesis", "chlorophyll", "glucose", "enzyme", "digestion"],
+    "textbookRef": "TIE Biology Form 2, Chapter 1, pp. 1-35"
+  },
+  {
+    "id": "bio-f2-02",
+    "subject": "Biology",
+    "classLevel": "Form 2",
+    "chapter": 2,
+    "topic": "Transport in Plants and Animals",
+    "subtopics": ["Osmosis and diffusion", "Transport in plants (xylem, phloem)", "Blood and circulation", "Heart structure"],
+    "nectaWeight": 0.85,
+    "keywords": ["osmosis", "diffusion", "xylem", "phloem", "transpiration", "heart", "blood"],
+    "textbookRef": "TIE Biology Form 2, Chapter 2, pp. 36-70"
+  },
+  {
+    "id": "bio-f3-01",
+    "subject": "Biology",
+    "classLevel": "Form 3",
+    "chapter": 1,
+    "topic": "Classification of Living Things",
+    "subtopics": ["Kingdoms of life", "Binomial nomenclature", "Vertebrates and invertebrates", "Local flora and fauna of Tanzania"],
+    "nectaWeight": 0.7,
+    "keywords": ["kingdom", "phylum", "classification", "taxonomy", "vertebrate", "invertebrate"],
+    "textbookRef": "TIE Biology Form 3, Chapter 1, pp. 1-28"
+  },
+  {
+    "id": "bio-f3-02",
+    "subject": "Biology",
+    "classLevel": "Form 3",
+    "chapter": 2,
+    "topic": "Reproduction",
+    "subtopics": ["Asexual vs sexual reproduction", "Human reproductive system", "Menstrual cycle", "Reproduction in plants", "STIs and HIV/AIDS"],
+    "nectaWeight": 0.95,
+    "keywords": ["reproduction", "fertilisation", "gametes", "menstrual cycle", "pollination"],
+    "textbookRef": "TIE Biology Form 3, Chapter 2, pp. 29-65"
+  },
+  {
+    "id": "bio-f4-01",
+    "subject": "Biology",
+    "classLevel": "Form 4",
+    "chapter": 1,
+    "topic": "Genetics and Heredity",
+    "subtopics": ["Mendel's laws", "Dominant and recessive alleles", "Genotype and phenotype", "Punnett squares", "Mutations"],
+    "nectaWeight": 0.9,
+    "keywords": ["genetics", "allele", "dominant", "recessive", "genotype", "phenotype", "DNA"],
+    "textbookRef": "TIE Biology Form 4, Chapter 1, pp. 1-32"
+  },
+  {
+    "id": "bio-f4-02",
+    "subject": "Biology",
+    "classLevel": "Form 4",
+    "chapter": 2,
+    "topic": "Evolution",
+    "subtopics": ["Darwin's theory", "Natural selection", "Evidence for evolution", "Adaptation", "Fossil record"],
+    "nectaWeight": 0.8,
+    "keywords": ["evolution", "natural selection", "adaptation", "fossil", "Darwin", "mutation"],
+    "textbookRef": "TIE Biology Form 4, Chapter 2, pp. 33-58"
+  },
+  {
+    "id": "chem-f1-01",
+    "subject": "Chemistry",
+    "classLevel": "Form 1",
+    "chapter": 1,
+    "topic": "Introduction to Chemistry",
+    "subtopics": ["Matter and its properties", "States of matter", "Physical and chemical changes", "Laboratory safety"],
+    "nectaWeight": 0.5,
+    "keywords": ["matter", "solid", "liquid", "gas", "physical change", "chemical change"],
+    "textbookRef": "TIE Chemistry Form 1, Chapter 1, pp. 1-20"
+  },
+  {
+    "id": "chem-f2-01",
+    "subject": "Chemistry",
+    "classLevel": "Form 2",
+    "chapter": 1,
+    "topic": "The Periodic Table",
+    "subtopics": ["History of periodic table", "Groups and periods", "Properties of elements", "Metals and non-metals"],
+    "nectaWeight": 0.85,
+    "keywords": ["periodic table", "element", "group", "period", "metal", "non-metal", "valence"],
+    "textbookRef": "TIE Chemistry Form 2, Chapter 1, pp. 1-30"
+  },
+  {
+    "id": "chem-f3-01",
+    "subject": "Chemistry",
+    "classLevel": "Form 3",
+    "chapter": 1,
+    "topic": "Acids, Bases and Salts",
+    "subtopics": ["Properties of acids and bases", "pH scale", "Neutralisation", "Preparation of salts", "Indicators"],
+    "nectaWeight": 0.9,
+    "keywords": ["acid", "base", "pH", "neutralisation", "salt", "indicator", "litmus"],
+    "textbookRef": "TIE Chemistry Form 3, Chapter 1, pp. 1-40"
+  },
+  {
+    "id": "chem-f4-01",
+    "subject": "Chemistry",
+    "classLevel": "Form 4",
+    "chapter": 1,
+    "topic": "Organic Chemistry",
+    "subtopics": ["Hydrocarbons", "Alkanes, alkenes, alkynes", "Functional groups", "Reactions of organic compounds"],
+    "nectaWeight": 0.9,
+    "keywords": ["carbon", "hydrocarbon", "alkane", "alkene", "organic", "polymer", "ethanol"],
+    "textbookRef": "TIE Chemistry Form 4, Chapter 1, pp. 1-45"
+  },
+  {
+    "id": "phys-f2-01",
+    "subject": "Physics",
+    "classLevel": "Form 2",
+    "chapter": 1,
+    "topic": "Forces and Motion",
+    "subtopics": ["Newton's laws of motion", "Types of forces", "Friction", "Gravitational force", "Weight vs mass"],
+    "nectaWeight": 0.9,
+    "keywords": ["force", "motion", "Newton", "friction", "gravity", "acceleration", "mass", "weight"],
+    "textbookRef": "TIE Physics Form 2, Chapter 1, pp. 1-35"
+  },
+  {
+    "id": "phys-f3-01",
+    "subject": "Physics",
+    "classLevel": "Form 3",
+    "chapter": 1,
+    "topic": "Electricity",
+    "subtopics": ["Electric current", "Ohm's law", "Series and parallel circuits", "Power and energy", "TANESCO and Tanzania power grid"],
+    "nectaWeight": 0.95,
+    "keywords": ["current", "voltage", "resistance", "Ohm", "circuit", "power", "watts", "ampere"],
+    "textbookRef": "TIE Physics Form 3, Chapter 1, pp. 1-42"
+  },
+  {
+    "id": "math-f1-01",
+    "subject": "Mathematics",
+    "classLevel": "Form 1",
+    "chapter": 1,
+    "topic": "Numbers and Operations",
+    "subtopics": ["Natural numbers", "Integers", "Fractions and decimals", "BODMAS", "Number bases"],
+    "nectaWeight": 0.8,
+    "keywords": ["integer", "fraction", "decimal", "BODMAS", "number", "operation"],
+    "textbookRef": "TIE Mathematics Form 1, Chapter 1, pp. 1-30"
+  },
+  {
+    "id": "math-f2-01",
+    "subject": "Mathematics",
+    "classLevel": "Form 2",
+    "chapter": 1,
+    "topic": "Algebra",
+    "subtopics": ["Linear equations", "Simultaneous equations", "Quadratic expressions", "Factorisation", "Word problems"],
+    "nectaWeight": 0.9,
+    "keywords": ["algebra", "equation", "variable", "factorisation", "simultaneous", "quadratic"],
+    "textbookRef": "TIE Mathematics Form 2, Chapter 1, pp. 1-40"
+  },
+  {
+    "id": "math-f3-01",
+    "subject": "Mathematics",
+    "classLevel": "Form 3",
+    "chapter": 1,
+    "topic": "Geometry",
+    "subtopics": ["Triangles and angles", "Pythagoras theorem", "Circle theorems", "Area and volume", "Coordinate geometry"],
+    "nectaWeight": 0.85,
+    "keywords": ["geometry", "angle", "triangle", "Pythagoras", "circle", "area", "volume"],
+    "textbookRef": "TIE Mathematics Form 3, Chapter 1, pp. 1-50"
+  },
+  {
+    "id": "math-f4-01",
+    "subject": "Mathematics",
+    "classLevel": "Form 4",
+    "chapter": 1,
+    "topic": "Statistics and Probability",
+    "subtopics": ["Data collection and presentation", "Mean, median, mode", "Probability", "Frequency distribution", "Histograms"],
+    "nectaWeight": 0.85,
+    "keywords": ["statistics", "mean", "median", "mode", "probability", "frequency", "histogram"],
+    "textbookRef": "TIE Mathematics Form 4, Chapter 1, pp. 1-38"
+  }
+]
