@@ -159,9 +159,14 @@ export interface AppSettings {
   llamaPort: number
   llamaThreads: number
   // AI Provider settings
-  aiProvider: 'llamacpp' | 'ollama'
+  aiProvider: 'llamacpp' | 'ollama' | 'cordon'
   ollamaEndpoint: string
   ollamaModel: string
+  // Cordon (Regnant) — a school-wide node that audits and signs every answer
+  cordonEndpoint?: string
+  cordonClientId?: string
+  cordonModel?: string
+  cordonContextSize?: number
   enableThinkingModels: boolean
   thinkingModel?: string
   // GPU settings

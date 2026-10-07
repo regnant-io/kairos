@@ -126,6 +126,10 @@ export function registerDBHandlers(ipc: IpcMain, db: DatabaseService, llama: Lla
       ollamaEndpoint: 'http://localhost:11434',
       ollamaModel: 'llama3.2:3b',
       enableThinkingModels: false,
+      cordonEndpoint: 'http://127.0.0.1:8443',
+      cordonClientId: 'kairos',
+      cordonModel: 'default',
+      cordonContextSize: 8192,
       useGPU: llama.getGPULayers() > 0,
       gpuLayers: llama.getGPULayers(),
       ...settings
@@ -150,6 +154,20 @@ export function registerDBHandlers(ipc: IpcMain, db: DatabaseService, llama: Lla
       db.setSetting('ollamaModel', JSON.stringify(updates.ollamaModel))
     }
     
+    // Cordon (Regnant) node settings
+    const cordonKeys = ['cordonEndpoint', 'cordonClientId', 'cordonModel', 'cordonContextSize'] as const
+    if (cordonKeys.some(k => updates[k] !== undefined)) {
+      for (const k of cordonKeys) {
+        if (updates[k] !== undefined) db.setSetting(k, JSON.stringify(updates[k]))
+      }
+      llama.setCordon({
+        endpoint: updates.cordonEndpoint,
+        clientId: updates.cordonClientId,
+        model: updates.cordonModel,
+        contextSize: updates.cordonContextSize !== undefined ? Number(updates.cordonContextSize) : undefined
+      })
+    }
+
     if (updates.thinkingModel !== undefined || updates.enableThinkingModels !== undefined) {
       const currentThinkingModel = updates.thinkingModel !== undefined 
         ? updates.thinkingModel 

@@ -8,13 +8,14 @@ import * as os from 'os'
 import { app } from 'electron'
 import type { AIStatusInfo, ModelConfig, FeatureKey } from '../../shared/ai-types'
 import { SUPPORTED_MODELS } from '../../shared/ai-types'
+import { cordonComplete, cordonHealth, cordonModels, type CordonReceipt } from './CordonClient'
 
 const LLAMA_PORT = 11434
 const LLAMA_HOST = '127.0.0.1'
 const HEALTH_TIMEOUT_MS = 45_000
 const HEALTH_POLL_MS = 1_000
 
-type AIProvider = 'llamacpp' | 'ollama'
+type AIProvider = 'llamacpp' | 'ollama' | 'cordon'
 
 export class LlamaService {
   private process: ChildProcess | null = null
@@ -26,6 +27,13 @@ export class LlamaService {
   private ollamaModel: string = 'llama3.2:3b'
   private thinkingModel?: string
   private enableThinkingModels: boolean = false
+  // Cordon (Regnant): a school-wide node that audits each request and signs
+  // each answer. See CordonClient.ts.
+  private cordonEndpoint: string = 'http://127.0.0.1:8443'
+  private cordonClientId: string = 'kairos'
+  private cordonModel: string = 'default'
+  private cordonContextSize: number = 8192
+  private lastReceipt?: CordonReceipt
   // The actual usable context window (prompt + generation) resolved from the
   // running model. This is the single source of truth for token budgeting and
   // is what prevents silent truncation of long generations (exams, lessons).
@@ -79,6 +87,22 @@ export class LlamaService {
 
   setOllamaModel(model: string): void {
     this.ollamaModel = model
+  }
+
+  setCordon(settings: { endpoint?: string; clientId?: string; model?: string; contextSize?: number }): void {
+    if (settings.endpoint) this.cordonEndpoint = settings.endpoint.replace(/\/+$/, '')
+    if (settings.clientId !== undefined) this.cordonClientId = settings.clientId
+    if (settings.model) this.cordonModel = settings.model
+    if (settings.contextSize && settings.contextSize > 0) this.cordonContextSize = settings.contextSize
+  }
+
+  /** Cordon's evidence (audit request ID, signature) for the last answer. */
+  getLastReceipt(): CordonReceipt | undefined {
+    return this.lastReceipt
+  }
+
+  private cordonConfig() {
+    return { endpoint: this.cordonEndpoint, clientId: this.cordonClientId, model: this.cordonModel }
   }
 
   setThinkingModel(model: string | undefined, enabled: boolean): void {
@@ -236,7 +260,21 @@ export class LlamaService {
     if (this.provider === 'ollama') {
       return this.startOllama()
     }
+    if (this.provider === 'cordon') {
+      return this.startCordon()
+    }
     return this.startLlamaCpp()
+  }
+
+  private async startCordon(): Promise<void> {
+    console.log('[Cordon] Connecting to Cordon at:', this.cordonEndpoint, 'as', this.cordonClientId)
+    if (!(await cordonHealth(this.cordonConfig(), 10_000))) {
+      throw new Error(`Cordon is not serving at ${this.cordonEndpoint}. Start the node (cordon run) or check the address.`)
+    }
+    const models = await cordonModels(this.cordonConfig())
+    this.modelName = models.includes(this.cordonModel) || !models.length ? this.cordonModel : models[0]
+    this.maxContextWindow = this.cordonContextSize
+    this.updateStatus({ status: 'ready', model: `cordon:${this.modelName}`, contextSize: this.maxContextWindow })
   }
 
   private async startOllama(): Promise<void> {
@@ -444,7 +482,7 @@ export class LlamaService {
   }
 
   async stop(): Promise<void> {
-    if (this.provider === 'ollama') {
+    if (this.provider === 'ollama' || this.provider === 'cordon') {
       // Nothing to stop for Ollama
       return
     }
@@ -473,6 +511,9 @@ export class LlamaService {
   // ── Health ──────────────────────────────────────────────────────
 
   async health(): Promise<boolean> {
+    if (this.provider === 'cordon') {
+      return cordonHealth(this.cordonConfig())
+    }
     try {
       const endpoint = this.provider === 'ollama' 
         ? `${this.ollamaEndpoint}/api/tags`
@@ -557,7 +598,11 @@ export class LlamaService {
       // (a grammar-constrained round would emit a new, separate JSON document).
       const roundJsonMode = jsonMode && rounds === 0
 
-      const runOnce = this.provider === 'ollama'
+      const runOnce = this.provider === 'cordon'
+        ? this.completeCordon(currentPrompt, {
+            maxTokens: roundBudget, temperature, stopSequences, stream, onChunk, jsonMode: roundJsonMode, signal
+          })
+        : this.provider === 'ollama'
         ? this.completeOllama(currentPrompt, {
             maxTokens: roundBudget, temperature, stopSequences, stream, onChunk, model, jsonMode: roundJsonMode, signal
           })
@@ -639,6 +684,26 @@ export class LlamaService {
     // stopped_limit === true means generation was cut off at the token budget.
     const truncated = data.stopped_limit === true || data.truncated === true
     return { text: data.content ?? '', truncated }
+  }
+
+  private async completeCordon(prompt: string, options: {
+    maxTokens: number
+    temperature: number
+    stopSequences: string[]
+    stream: boolean
+    onChunk?: (chunk: string) => void
+    jsonMode?: boolean
+    signal?: AbortSignal
+  }): Promise<{ text: string; truncated: boolean; cancelled?: boolean }> {
+    const res = await cordonComplete(this.cordonConfig(), prompt, {
+      ...options,
+      signal: combineSignals(AbortSignal.timeout(600_000), options.signal)
+    })
+    if (res.receipt) {
+      this.lastReceipt = res.receipt
+      console.log(`[Cordon] answer signed (request ${res.receipt.request_id ?? '?'})`)
+    }
+    return { text: res.text, truncated: res.truncated, cancelled: res.cancelled }
   }
 
   private async completeOllama(prompt: string, options: {
@@ -824,6 +889,8 @@ export class LlamaService {
   }
 
   async embed(text: string): Promise<number[]> {
+    // Cordon serves completions only; callers treat [] as "no embedding".
+    if (this.provider === 'cordon') return []
     try {
       const endpoint = this.provider === 'ollama'
         ? `${this.ollamaEndpoint}/api/embeddings`

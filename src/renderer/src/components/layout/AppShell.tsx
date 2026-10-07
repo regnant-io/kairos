@@ -45,7 +45,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
           <span className="text-white font-heading font-bold text-sm">K</span>
         </div>
-        <span className="font-heading font-bold text-primary text-lg tracking-tight">Kairos</span>
+        <span className="flex flex-col leading-none">
+          <span className="font-heading font-bold text-primary text-lg tracking-tight">Kairos</span>
+          <span className="text-[9px] tracking-wider text-content-secondary">by Regnant</span>
+        </span>
         <button
           onClick={toggleTheme}
           className="ml-auto w-8 h-8 rounded-lg flex items-center justify-center text-content-secondary hover:bg-surface-hover transition-colors no-drag"

@@ -109,6 +109,17 @@ async function bootstrap(): Promise<void> {
       console.log(`[Kairos] Ollama model set to ${JSON.parse(ollamaModel)}`)
     }
 
+    const cordonSetting = (key: string) => {
+      const raw = db.getSetting(key)
+      return raw ? JSON.parse(raw) : undefined
+    }
+    llama.setCordon({
+      endpoint: cordonSetting('cordonEndpoint'),
+      clientId: cordonSetting('cordonClientId'),
+      model: cordonSetting('cordonModel'),
+      contextSize: cordonSetting('cordonContextSize')
+    })
+
     if (enableThinkingModels && thinkingModel) {
       llama.setThinkingModel(
         JSON.parse(thinkingModel),
