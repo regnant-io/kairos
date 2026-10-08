@@ -172,7 +172,7 @@ export function ReportsPage() {
   const finalizedCount = students.filter(s => reports.get(s.id)?.isFinalized).length
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="operator-workflow-page operator-reports-page flex h-screen overflow-hidden">
       {/* Left Config */}
       <div className="w-72 flex flex-col border-r border-slate-200 bg-white flex-shrink-0">
         <div className="p-4 border-b border-slate-100">
@@ -250,7 +250,7 @@ export function ReportsPage() {
             <button className="btn-secondary w-full" onClick={async () => {
               const payload = {
                 type: 'report' as const,
-                title: `${classLevel} ${subject} Reports — ${term} ${year}`,
+                title: `${classLevel} ${subject} Reports, ${term} ${year}`,
                 content: Array.from(reports.values()),
                 template: 'plain' as const,
                 schoolName: teacher?.schoolName,
@@ -271,7 +271,7 @@ export function ReportsPage() {
         <div className="max-w-3xl">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-heading text-xl font-semibold text-slate-700">
-              {classLevel} — {students.length} Students
+              {classLevel}: {students.length} Students
             </h2>
             <div className="flex gap-2">
               <Badge label={`${doneCount} ready`} color="green" />

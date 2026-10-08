@@ -20,6 +20,12 @@ import type {
 
 // All invoke channels (request/response)
 export interface KairosInvokeChannels {
+  // Desktop window controls
+  'window:minimize': () => void
+  'window:toggle-maximize': () => boolean
+  'window:is-maximized': () => boolean
+  'window:close': () => void
+
   // ── AI Operations ─────────────────────────────────────────────
   'ai:generate-lesson': (params: LessonParams) => LessonPlan
   'ai:generate-exam': (params: ExamParams) => ExamPaper
@@ -106,6 +112,7 @@ export interface KairosInvokeChannels {
 
 // One-way events from main to renderer
 export interface KairosEventChannels {
+  'window:maximized-change': boolean
   'ai:stream-start': { jobId: string; feature: string }
   'ai:stream-chunk': { jobId: string; chunk: string }
   'ai:stream-end': { jobId: string; result: string; feature?: string }
@@ -159,9 +166,14 @@ export interface AppSettings {
   llamaPort: number
   llamaThreads: number
   // AI Provider settings
-  aiProvider: 'llamacpp' | 'ollama'
+  aiProvider: 'llamacpp' | 'ollama' | 'cordon'
   ollamaEndpoint: string
   ollamaModel: string
+  // Cordon (Regnant) — a school-wide node that audits and signs every answer
+  cordonEndpoint?: string
+  cordonClientId?: string
+  cordonModel?: string
+  cordonContextSize?: number
   enableThinkingModels: boolean
   thinkingModel?: string
   // GPU settings

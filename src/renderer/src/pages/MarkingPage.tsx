@@ -150,11 +150,11 @@ export function MarkingPage() {
     : []
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="operator-workflow-page operator-marking-page flex h-screen overflow-hidden">
       {/* Left panel */}
       <div className="w-72 flex flex-col border-r border-slate-200 bg-white flex-shrink-0">
         <div className="p-4 border-b border-slate-100">
-          <PageHeader title="Marking Assistant" subtitle="AI-assisted grading" className="mb-0" />
+          <PageHeader title="Marking desk" subtitle="Review answers and award marks" className="mb-0" />
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -270,7 +270,7 @@ export function MarkingPage() {
                 <h2 className="font-heading text-lg font-semibold text-slate-700">
                   {selectedStudent.name}
                 </h2>
-                <span className="text-slate-400">—</span>
+                <span className="text-slate-400">/</span>
                 <span className="text-sm text-slate-500">{selectedExam.title}</span>
               </div>
               <div className="flex items-center gap-2">

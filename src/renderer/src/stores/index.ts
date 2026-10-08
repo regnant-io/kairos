@@ -92,7 +92,7 @@ interface Toast {
 
 // Detect system theme preference
 function getSystemTheme(): 'light' | 'dark' | 'high-contrast' {
-  if (typeof window === 'undefined') return 'light'
+  if (typeof window === 'undefined') return 'dark'
   
   // Check if user prefers dark mode
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -104,7 +104,7 @@ function getSystemTheme(): 'light' | 'dark' | 'high-contrast' {
     return 'high-contrast'
   }
   
-  return 'light'
+  return 'dark'
 }
 
 export const useUIStore = create<UIState>()(

@@ -143,7 +143,7 @@ export function SettingsPage() {
   ]
 
   return (
-    <div className="p-6 max-w-3xl">
+    <div className="operator-standard-page operator-settings-page p-6 max-w-3xl">
       <PageHeader title="Settings" subtitle="Configure Kairos for your school" />
 
       <Tabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
@@ -339,7 +339,7 @@ export function SettingsPage() {
               <Cpu size={15} /> AI Provider
             </h3>
             <p className="text-sm text-slate-500 mb-4">
-              Choose between local llama.cpp or Ollama for AI inference
+              Choose local llama.cpp, Ollama, or a Cordon node on your school network
             </p>
             <div className="space-y-3">
               <Field label="Provider">
@@ -347,7 +347,8 @@ export function SettingsPage() {
                   value={settings?.aiProvider ?? 'llamacpp'}
                   onChange={async (v) => {
                     try {
-                      await ipc('settings:save', { aiProvider: v as 'llamacpp' | 'ollama' })
+                      await ipc('settings:save', { aiProvider: v as 'llamacpp' | 'ollama' | 'cordon' })
+                      setSettings({ ...settings, aiProvider: v as 'llamacpp' | 'ollama' | 'cordon' } as any)
                       addToast({ type: 'success', title: 'Provider updated', message: 'Restart AI to apply changes' })
                     } catch (err) {
                       addToast({ type: 'error', title: 'Failed', message: String(err) })
@@ -355,10 +356,43 @@ export function SettingsPage() {
                   }}
                   options={[
                     { value: 'llamacpp', label: 'llama.cpp (Local)' },
-                    { value: 'ollama', label: 'Ollama' }
+                    { value: 'ollama', label: 'Ollama' },
+                    { value: 'cordon', label: 'Cordon (school server, signed answers)' }
                   ]}
                 />
               </Field>
+
+              {settings?.aiProvider === 'cordon' && (
+                <>
+                  <p className="text-xs text-slate-500">
+                    Cordon runs one model for the whole school. It records every request and signs every
+                    answer, so you can show which exam or report the AI produced, and that it was not changed.
+                  </p>
+                  {([
+                    ['cordonEndpoint', 'Cordon address', 'http://127.0.0.1:8443'],
+                    ['cordonClientId', 'Client ID (enrolled on the node)', 'kairos'],
+                    ['cordonModel', 'Model', 'default'],
+                    ['cordonContextSize', 'Context window (tokens)', '8192']
+                  ] as const).map(([key, label, fallback]) => (
+                    <Field key={key} label={label}>
+                      <input
+                        className="input"
+                        placeholder={fallback}
+                        defaultValue={String((settings as any)?.[key] ?? fallback)}
+                        onBlur={async (e) => {
+                          const value = key === 'cordonContextSize' ? Number(e.target.value) || 8192 : e.target.value.trim()
+                          try {
+                            await ipc('settings:save', { [key]: value })
+                            addToast({ type: 'success', title: `${label} updated`, message: 'Restart AI to apply changes' })
+                          } catch (err) {
+                            addToast({ type: 'error', title: 'Failed', message: String(err) })
+                          }
+                        }}
+                      />
+                    </Field>
+                  ))}
+                </>
+              )}
 
               {settings?.aiProvider === 'ollama' && (
                 <>
@@ -381,8 +415,8 @@ export function SettingsPage() {
                   <Field label="Ollama Model">
                     <input
                       className="input"
-                      placeholder="llama3.2:3b"
-                      defaultValue={settings?.ollamaModel ?? 'llama3.2:3b'}
+            placeholder="gemma4:cloud"
+            defaultValue={settings?.ollamaModel ?? 'gemma4:cloud'}
                       onBlur={async (e) => {
                         try {
                           await ipc('settings:save', { ollamaModel: e.target.value })
@@ -599,7 +633,7 @@ export function SettingsPage() {
             </h3>
             <p className="text-sm text-slate-500 mb-4">
               Export your data to share with other teachers or sync between devices.
-              No internet required — perfect for school networks.
+              Kairos works without internet.
             </p>
             <div className="flex gap-2">
               <button className="btn-secondary" onClick={async () => {

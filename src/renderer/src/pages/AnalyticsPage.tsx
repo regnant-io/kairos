@@ -80,7 +80,7 @@ export function AnalyticsPage() {
     : 'danger'
 
   return (
-    <div className="p-6 max-w-5xl">
+    <div className="operator-standard-page p-6 max-w-5xl">
       <PageHeader
         title="Class Insights"
         subtitle="Performance analytics and NECTA readiness tracking"

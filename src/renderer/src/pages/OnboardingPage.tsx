@@ -1,6 +1,6 @@
 // src/renderer/src/pages/OnboardingPage.tsx
 import React, { useState } from 'react'
-import { BookOpen, ChevronRight, CheckCircle } from 'lucide-react'
+import { ChevronRight, CheckCircle } from 'lucide-react'
 import { ipc } from '../hooks/useIPC'
 import { useTeacherStore, useUIStore } from '../stores'
 import { SUBJECTS, CLASS_LEVELS } from '@shared/db-types'
@@ -53,7 +53,7 @@ export function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-600 to-primary-900 flex items-center justify-center p-6">
+    <div className="operator-onboarding min-h-screen bg-gradient-to-br from-primary-600 to-primary-900 flex items-center justify-center p-6">
       <div className="w-full max-w-lg">
 
         {/* Logo */}
@@ -62,7 +62,7 @@ export function OnboardingPage() {
             <span className="font-heading text-white text-3xl font-bold">K</span>
           </div>
           <h1 className="font-heading text-3xl font-bold text-white">Kairos</h1>
-          <p className="text-primary-200 mt-1 text-sm">AI Teacher Copilot for Tanzania</p>
+          <p className="text-primary-200 mt-1 text-sm">Setup</p>
         </div>
 
         {/* Step card */}
@@ -80,31 +80,13 @@ export function OnboardingPage() {
           <div className="p-8">
             {/* WELCOME */}
             {step === 'welcome' && (
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto">
-                  <BookOpen size={28} className="text-primary" />
-                </div>
-                <h2 className="font-heading text-2xl font-semibold text-slate-800">
-                  Welcome to Kairos
-                </h2>
+              <div className="space-y-4">
+                <h2 className="font-heading text-2xl font-semibold text-slate-800">Set up Kairos</h2>
                 <p className="text-slate-500 text-sm leading-relaxed">
-                  Your AI-powered teaching assistant. Generate lesson plans, exams,
-                  and report comments in seconds — all offline, all in your language.
+                  Add your profile, subjects, and classes. You can change these later in Settings.
                 </p>
-                <div className="grid grid-cols-3 gap-3 mt-6 text-center">
-                  {[
-                    { label: 'Lesson Plans', sub: '2 min avg' },
-                    { label: 'Exam Papers', sub: 'NECTA-ready' },
-                    { label: 'Report Comments', sub: 'Full class batch' }
-                  ].map(f => (
-                    <div key={f.label} className="bg-slate-50 rounded-xl p-3">
-                      <p className="text-xs font-semibold text-slate-700">{f.label}</p>
-                      <p className="text-xs text-slate-400 mt-0.5">{f.sub}</p>
-                    </div>
-                  ))}
-                </div>
-                <button className="btn-primary w-full mt-4" onClick={() => setStep('profile')}>
-                  Get Started <ChevronRight size={16} />
+                <button className="btn-primary w-full" onClick={() => setStep('profile')}>
+                  Continue <ChevronRight size={16} />
                 </button>
               </div>
             )}
@@ -236,7 +218,7 @@ export function OnboardingPage() {
                 <CheckCircle size={48} className="text-success mx-auto" />
                 <h2 className="font-heading text-xl font-semibold text-slate-800">You're all set!</h2>
                 <p className="text-slate-500 text-sm">
-                  Kairos is ready. The AI model is loading in the background — it will be ready in about 30 seconds.
+                  Setup is complete. The AI model is loading in the background.
                 </p>
                 <button className="btn-primary w-full" onClick={() => window.location.reload()}>
                   Open Kairos →
@@ -247,7 +229,7 @@ export function OnboardingPage() {
         </div>
 
         <p className="text-center text-primary-300 text-xs mt-6">
-          100% offline • Your data stays on your device
+          Data is stored on this device.
         </p>
       </div>
     </div>

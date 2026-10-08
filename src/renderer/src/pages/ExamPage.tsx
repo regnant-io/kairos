@@ -128,11 +128,11 @@ export function ExamPage() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="operator-workflow-page operator-exam-page flex h-screen overflow-hidden">
       {/* Sidebar */}
       <div className="w-80 flex flex-col border-r border-slate-200 bg-white overflow-hidden flex-shrink-0">
         <div className="p-4 border-b border-slate-100">
-          <PageHeader title="Exam Generator" subtitle="NECTA-style exam papers" className="mb-0" />
+          <PageHeader title="Exam studio" subtitle="Build a curriculum aligned paper" className="mb-0" />
         </div>
 
         <Tabs

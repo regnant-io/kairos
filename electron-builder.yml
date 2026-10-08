@@ -10,9 +10,14 @@ files:
   - out/**/*
   - assets/**/*
   - "!**/*.map"
-  - "!**/node_modules/**"
 
 extraResources:
+  - from: resources/icon.png
+    to: icon.png
+  - from: resources/tray.png
+    to: tray.png
+  - from: resources/trayTemplate.png
+    to: trayTemplate.png
   - from: binaries/${os}-${arch}
     to: binaries
     filter:
@@ -21,8 +26,6 @@ extraResources:
     to: curriculum
   - from: assets/necta
     to: necta
-  - from: assets/i18n
-    to: i18n
 
 asarUnpack:
   - "**/node_modules/better-sqlite3/**"
@@ -54,7 +57,7 @@ linux:
       arch: [x64]
   icon: resources/icon.png
   category: Education
-  description: AI Teacher Copilot for Tanzanian Secondary Schools
+  description: Offline tools for teachers
 
 mac:
   target:

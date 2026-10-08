@@ -12,12 +12,42 @@ import { registerFileHandlers } from './ipc/file.ipc'
 import { registerSyncHandlers } from './ipc/sync.ipc'
 import { registerOMRHandlers } from './ipc/omr.ipc'
 import { createMainWindow } from './windows/MainWindow'
+import { createAppTray, destroyAppTray, notifyBackground } from './windows/TrayController'
 import { existsSync, readFileSync } from 'fs'
 
 // Singletons
 export let mainWindow: BrowserWindow | null = null
 export const db = new DatabaseService()
 export const llama = new LlamaService()
+let hasTray = false
+let isQuitting = false
+let shutdownComplete = false
+let shutdownStarted = false
+
+function showMainWindow(): void {
+  if (!mainWindow || mainWindow.isDestroyed()) return
+  if (mainWindow.isMinimized()) mainWindow.restore()
+  mainWindow.show()
+  mainWindow.focus()
+}
+
+function attachWindow(window: BrowserWindow): void {
+  mainWindow = window
+  window.on('ready-to-show', () => { if (!isQuitting) window.show() })
+  window.on('maximize', () => window.webContents.send('window:maximized-change', true))
+  window.on('unmaximize', () => window.webContents.send('window:maximized-change', false))
+  window.on('close', event => {
+    if (isQuitting || !hasTray) return
+    event.preventDefault()
+    window.hide()
+    notifyBackground()
+  })
+  window.on('closed', () => { if (mainWindow === window) mainWindow = null })
+  window.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url)
+    return { action: 'deny' }
+  })
+}
 
 /**
  * Load the TIE curriculum JSON from bundled assets and seed it into the DB.
@@ -73,17 +103,28 @@ async function bootstrap(): Promise<void> {
   registerSyncHandlers(ipcMain, db)
   registerOMRHandlers(ipcMain, db)
 
+  ipcMain.handle('window:minimize', event => BrowserWindow.fromWebContents(event.sender)?.minimize())
+  ipcMain.handle('window:toggle-maximize', event => {
+    const window = BrowserWindow.fromWebContents(event.sender)
+    if (!window) return false
+    if (window.isMaximized()) window.unmaximize()
+    else window.maximize()
+    return window.isMaximized()
+  })
+  ipcMain.handle('window:is-maximized', event => BrowserWindow.fromWebContents(event.sender)?.isMaximized() ?? false)
+  ipcMain.handle('window:close', event => BrowserWindow.fromWebContents(event.sender)?.close())
+
   // Create the main window
-  mainWindow = createMainWindow()
-
-  mainWindow.on('ready-to-show', () => {
-    mainWindow?.show()
-  })
-
-  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-    shell.openExternal(url)
-    return { action: 'deny' }
-  })
+  attachWindow(createMainWindow())
+  try {
+    createAppTray(() => mainWindow, () => {
+      isQuitting = true
+      app.quit()
+    })
+    hasTray = true
+  } catch (error) {
+    console.error('[Kairos] Tray unavailable:', error)
+  }
 
   // Load AI provider settings from database before starting llama server
   try {
@@ -108,6 +149,17 @@ async function bootstrap(): Promise<void> {
       llama.setOllamaModel(JSON.parse(ollamaModel))
       console.log(`[Kairos] Ollama model set to ${JSON.parse(ollamaModel)}`)
     }
+
+    const cordonSetting = (key: string) => {
+      const raw = db.getSetting(key)
+      return raw ? JSON.parse(raw) : undefined
+    }
+    llama.setCordon({
+      endpoint: cordonSetting('cordonEndpoint'),
+      clientId: cordonSetting('cordonClientId'),
+      model: cordonSetting('cordonModel'),
+      contextSize: cordonSetting('cordonContextSize')
+    })
 
     if (enableThinkingModels && thinkingModel) {
       llama.setThinkingModel(
@@ -146,24 +198,32 @@ async function bootstrap(): Promise<void> {
   })
 
   app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      mainWindow = createMainWindow()
-    }
+    if (!mainWindow || mainWindow.isDestroyed()) attachWindow(createMainWindow())
+    else showMainWindow()
   })
 }
 
 app.whenReady().then(bootstrap)
 
-app.on('window-all-closed', async () => {
-  await llama.stop()
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+app.on('window-all-closed', () => {
+  if (!hasTray && process.platform !== 'darwin') app.quit()
 })
 
-app.on('before-quit', async () => {
-  await llama.stop()
+app.on('before-quit', event => {
+  isQuitting = true
+  if (shutdownComplete) return
+  event.preventDefault()
+  if (shutdownStarted) return
+  shutdownStarted = true
+  void llama.stop().catch(error => {
+    console.error('[Kairos] Could not stop the model cleanly:', error)
+  }).finally(() => {
+    shutdownComplete = true
+    app.quit()
+  })
 })
+
+app.on('will-quit', destroyAppTray)
 
 // Prevent multiple instances
 const gotTheLock = app.requestSingleInstanceLock()
@@ -171,9 +231,6 @@ if (!gotTheLock) {
   app.quit()
 } else {
   app.on('second-instance', () => {
-    if (mainWindow) {
-      if (mainWindow.isMinimized()) mainWindow.restore()
-      mainWindow.focus()
-    }
+    showMainWindow()
   })
 }

@@ -68,7 +68,7 @@ export function LessonPage() {
       const plan = await ipc('ai:generate-lesson', params)
       setCurrentPlan(plan)
       setActiveTab('preview')
-      addToast({ type: 'success', title: 'Lesson plan ready!', message: `${plan.topic} — ${plan.classLevel}` })
+      addToast({ type: 'success', title: 'Lesson plan ready', message: `${plan.topic}, ${plan.classLevel}` })
     } catch (err) {
       addToast({ type: 'error', title: 'Generation failed', message: String(err) })
     }
@@ -126,7 +126,7 @@ export function LessonPage() {
   })
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="operator-workflow-page operator-lesson-page flex h-screen overflow-hidden">
       {/* Left: Form + History */}
       <div className="w-80 flex flex-col border-r border-slate-200 bg-white overflow-hidden flex-shrink-0">
         <div className="p-4 border-b border-slate-100">

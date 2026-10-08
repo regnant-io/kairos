@@ -20,7 +20,7 @@ export function OMRPage() {
   const [mode, setMode] = useState<OmrMode>('generate')
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="operator-workflow-page operator-omr-page flex flex-col h-screen overflow-hidden">
       <div className="px-6 pt-6">
         <PageHeader
           title={t('nav.omr')}
@@ -116,7 +116,7 @@ function GenerateMode() {
           <Select
             value={selectedExamId}
             onChange={setSelectedExamId}
-            options={exams.map((e) => ({ value: e.id, label: `${e.subject} — ${e.title}` }))}
+            options={exams.map((e) => ({ value: e.id, label: `${e.subject}: ${e.title}` }))}
             placeholder="Choose an exam…"
           />
         </Field>
@@ -584,7 +584,7 @@ function SheetDetail({ sheet }: { sheet: OmrSheet }) {
                 <Select
                   value={sheet.examId ?? ''}
                   onChange={handleAssignExam}
-                  options={exams.map((e) => ({ value: e.id, label: `${e.subject} — ${e.title}` }))}
+                  options={exams.map((e) => ({ value: e.id, label: `${e.subject}: ${e.title}` }))}
                   placeholder="Choose an exam…"
                 />
               </Field>
@@ -731,7 +731,7 @@ function AnswerRow({
 
       <div className="text-sm flex-shrink-0">
         <span className="text-slate-500">Expected: </span>
-        <span className="font-medium text-slate-800">{expected ?? '—'}</span>
+        <span className="font-medium text-slate-800">{expected ?? 'Not detected'}</span>
       </div>
 
       <Select

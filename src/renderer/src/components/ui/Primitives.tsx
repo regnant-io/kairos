@@ -14,10 +14,10 @@ export function PageHeader({
   className?: string
 }) {
   return (
-    <div className={cn('flex items-start justify-between mb-6', className)}>
+    <div className={cn('operator-page-header flex items-start justify-between mb-6', className)}>
       <div>
-        <h1 className="font-heading text-2xl font-semibold text-primary">{title}</h1>
-        {subtitle && <p className="text-sm text-slate-500 mt-0.5">{subtitle}</p>}
+        <h1>{title}</h1>
+        {subtitle && <p>{subtitle}</p>}
       </div>
       {actions && <div className="flex items-center gap-2">{actions}</div>}
     </div>
@@ -43,7 +43,7 @@ export function StatCard({
     danger: 'bg-red-50 text-danger'
   }
   return (
-    <div className="card p-4">
+    <div className="card operator-stat-card p-4">
       <div className="flex items-start justify-between">
         <div>
           <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">{label}</p>
@@ -71,7 +71,7 @@ export function EmptyState({
   action?: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col items-center justify-center py-16 text-center">
+    <div className="operator-empty-state flex flex-col items-center justify-center py-16 text-center">
       <div className="w-14 h-14 rounded-full bg-slate-100 flex items-center justify-center mb-4 text-slate-400">
         {icon}
       </div>
@@ -180,16 +180,8 @@ export function ProgressBar({ value, max = 100, color = 'primary', showLabel = f
 // ── Badge ─────────────────────────────────────────────────────────
 
 export function Badge({ label, color = 'slate' }: { label: string; color?: string }) {
-  const styles: Record<string, string> = {
-    slate: 'bg-slate-100 text-slate-600',
-    blue: 'bg-blue-50 text-blue-700',
-    green: 'bg-green-50 text-green-700',
-    amber: 'bg-amber-50 text-amber-700',
-    red: 'bg-red-50 text-red-700',
-    primary: 'bg-primary-50 text-primary'
-  }
   return (
-    <span className={cn('inline-flex items-center px-2 py-0.5 rounded text-xs font-medium', styles[color] ?? styles.slate)}>
+    <span className={cn('operator-badge inline-flex items-center px-2 py-0.5', `operator-badge-${color}`)}>
       {label}
     </span>
   )
@@ -205,7 +197,7 @@ export function Tabs({
   onTabChange: (id: string) => void
 }) {
   return (
-    <div className="flex border-b border-slate-200 mb-6">
+    <div className="operator-tabs flex border-b border-slate-200 mb-6">
       {tabs.map(tab => (
         <button
           key={tab.id}
